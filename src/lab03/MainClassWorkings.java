@@ -1,7 +1,8 @@
 package lab03;
-import java.lang.instrument.Instrumentation;
+//import java.lang.instrument.Instrumentation;
 import java.util.ArrayList;
 import java.util.List;
+
 
 // Note: this whole lab 03 is simply a simulation, not actually garbage collecting [correct?]
 
@@ -19,6 +20,10 @@ public class MainClassWorkings {
 	 * Constructor. 
 	 */
 	public MainClassWorkings()
+	{
+	}
+	
+	public void assignStepOne()
 	{
 		
 	}
