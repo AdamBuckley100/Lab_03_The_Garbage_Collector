@@ -5,9 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class UserInterface extends JFrame {
-	
 
-	
 	/**
 	 * Create the GUI and show it.  For thread safety,
 	 * this method should be invoked from the
@@ -16,7 +14,7 @@ public class UserInterface extends JFrame {
 	private static void createAndShowGUI(MainClassWorkings main) {
 		//Make sure we have nice window decorations.
 		//JFrame.setDefaultLookAndFeelDecorated(true);
-		
+
 		//MainClassWorkings main = new MainClassWorkings();
 
 		//Create and set up the window.
@@ -82,57 +80,57 @@ public class UserInterface extends JFrame {
 		innerPanelOne.add(handleList);
 
 		innerPanelOne.add(new JLabel("          "));
-		
+
 		JList<Fish> objectList = new JList<Fish>(main.objectPool);
 		innerPanelOne.add(objectList);
-		
+
 		objectList.setCellRenderer(new FishRenderer());
 
 		JPanel innerPanelTwo = new JPanel();
 		innerPanelTwo.setLayout(new FlowLayout());
-		
+
 		JButton addRedFish = new JButton("Add Red Fish");
 		innerPanelTwo.add(addRedFish);
 		addRedFish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				
+
 				main.handlePool.addElement(new RedFish());
-				
+
 				// need size added too below. CUSTOM RENDERER NEEDED
-				
+
 				main.objectPool.addElement(new RedFish());
-				
+
 				//main.objectPool.setCellRenderer(new FishRenderer());
 			}
 		});
-		
+
 		//innerPanelTwo.add(new JButton("Red Fish"));
 		//addRedFish
-		
+
 		JButton addBlueFish = new JButton("Add Blue Fish");
 		innerPanelTwo.add(addBlueFish);
 		addBlueFish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				main.handlePool.addElement(new BlueFish());
 				main.objectPool.addElement(new BlueFish());
-			
+
 			}
 		});
-		
+
 		JButton addYellowFish = new JButton("Add Yellow Fish");
 		innerPanelTwo.add(addYellowFish);
 		addYellowFish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				main.handlePool.addElement(new YellowFish());
 				main.objectPool.addElement(new YellowFish());
-				
+
 				//main.objectPool.setCellRenderer(new FishRenderer());
 			}
 		});
-		
+
 		//innerPanelTwo.add(new JButton("Blue Fish"));
 		//innerPanelTwo.add(new JButton("Yellow Fish"));
-		
+
 		panel.add(innerPanelOne);
 		panel.add(innerPanelTwo);
 		return panel;
