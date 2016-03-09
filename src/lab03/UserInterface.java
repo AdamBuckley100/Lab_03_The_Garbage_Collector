@@ -78,9 +78,15 @@ public class UserInterface extends JFrame {
 		innerPanelOne.add(new JLabel("Handle Pool"));
 		innerPanelOne.add(new JLabel("          "));
 		innerPanelOne.add(new JLabel("Object Pool"));
-		innerPanelOne.add(new JList<Fish>(main.handlePool));
+		JList<Fish> handleList = new JList<Fish>(main.handlePool);
+		innerPanelOne.add(handleList);
+
 		innerPanelOne.add(new JLabel("          "));
-		innerPanelOne.add(new JList());
+		
+		JList<Fish> objectList = new JList<Fish>(main.objectPool);
+		innerPanelOne.add(objectList);
+		
+		objectList.setCellRenderer(new FishRenderer());
 
 		JPanel innerPanelTwo = new JPanel();
 		innerPanelTwo.setLayout(new FlowLayout());
@@ -89,8 +95,14 @@ public class UserInterface extends JFrame {
 		innerPanelTwo.add(addRedFish);
 		addRedFish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
+				
 				main.handlePool.addElement(new RedFish());
+				
+				// need size added too below. CUSTOM RENDERER NEEDED
+				
 				main.objectPool.addElement(new RedFish());
+				
+				//main.objectPool.setCellRenderer(new FishRenderer());
 			}
 		});
 		
@@ -102,6 +114,8 @@ public class UserInterface extends JFrame {
 		addBlueFish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				main.handlePool.addElement(new BlueFish());
+				main.objectPool.addElement(new BlueFish());
+			
 			}
 		});
 		
@@ -110,6 +124,9 @@ public class UserInterface extends JFrame {
 		addYellowFish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				main.handlePool.addElement(new YellowFish());
+				main.objectPool.addElement(new YellowFish());
+				
+				//main.objectPool.setCellRenderer(new FishRenderer());
 			}
 		});
 		
