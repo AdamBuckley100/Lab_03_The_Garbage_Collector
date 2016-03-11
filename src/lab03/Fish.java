@@ -6,4 +6,14 @@ public class Fish {
 	{
 		return "fish";
 	}
+	
+	public int toSize()
+	{
+		return -1;
+	}
+	
+	public String toStringWithSize()
+	{
+		return toString() + " (" + toSize() + ")";
+	}
 }

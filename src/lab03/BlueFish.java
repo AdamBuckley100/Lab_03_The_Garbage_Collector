@@ -10,9 +10,8 @@ public class BlueFish extends Fish{
 		return "blue fish";
 	}
 
-	public String toStringWithSize()
+	public int toSize()
 	{
-		return "space taken : (2)";
+		return 2;
 	}
-
 }

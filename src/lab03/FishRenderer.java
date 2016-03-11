@@ -21,7 +21,9 @@ public class FishRenderer extends JLabel implements ListCellRenderer<Fish>
 	@Override
 	public Component getListCellRendererComponent(JList<? extends Fish> list, Fish value, int index,
 			boolean isSelected, boolean cellHasFocus) {
-
-		return new JLabel("boo");
+		
+		String b = value.toStringWithSize();
+			
+		return new JLabel(b);
 	}  
 }

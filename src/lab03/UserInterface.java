@@ -5,15 +5,37 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class UserInterface extends JFrame {
+	
+	// in the handle pool every entry same size
+	public DefaultListModel handlePool;
+	// Below: each and every memory block has a 4 byte header (an int if 4 bytes)
+	public DefaultListModel objectPool;
+	
+	public static DefaultListModel redPool;
+	public static DefaultListModel bluePool;
+	public static DefaultListModel yellowPool;
+	
+	//public static DefaultListModel links;
+	private static final DefaultListModel<Link> links = new DefaultListModel<Link>();
 
+	
+	public UserInterface()
+	{
+		// so the GUI can attach to list
+		handlePool = new DefaultListModel();
+		objectPool = new DefaultListModel();
+		
+		redPool = new DefaultListModel();
+		bluePool = new DefaultListModel();
+		yellowPool = new DefaultListModel();
+	}
+	
 	/**
 	 * Create the GUI and show it.  For thread safety,
 	 * this method should be invoked from the
 	 * event-dispatching thread.
 	 */
 	private static void createAndShowGUI(MainClassWorkings main) {
-		//Make sure we have nice window decorations.
-		//JFrame.setDefaultLookAndFeelDecorated(true);
 
 		//MainClassWorkings main = new MainClassWorkings();
 
@@ -137,21 +159,41 @@ public class UserInterface extends JFrame {
 	}
 
 	public static JComponent makeTabTwo() {
-		JPanel panel = new JPanel(false);
+		JPanel panel = new JPanel();
 
 		BoxLayout boxLayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
 		panel.setLayout(boxLayout);
 
 		JPanel innerPanelOne = new JPanel();
-		innerPanelOne.setLayout(new GridLayout(2,4));
+		//GridLayout gl = innerPanelOne.setLayout(new GridLayout(2,4));
+		GridLayout gl = new GridLayout(2, 4);
+		gl.setHgap(3);
+		innerPanelOne.setLayout(gl);
+		
 		innerPanelOne.add(new JLabel("Local variables"));
 		innerPanelOne.add(new JLabel("red Fish instances"));
 		innerPanelOne.add(new JLabel("blue Fish instances"));
 		innerPanelOne.add(new JLabel("yellow Fish instances"));
-		innerPanelOne.add(new JList());
-		innerPanelOne.add(new JList());
-		innerPanelOne.add(new JList());
-		innerPanelOne.add(new JList());
+		//innerPanelOne.add(new JList());
+		//innerPanelOne.add(new JList());
+		//innerPanelOne.add(new JList());
+		//innerPanelOne.add(new JList());
+		
+		DefaultListModel<String> localVariables = new DefaultListModel<String>();
+		localVariables.addElement("Red variable:");
+		localVariables.addElement("Yellow variable:");
+		
+		JList<String> list1 = new JList<String>(localVariables);
+		panel.add(list1);
+		
+		JList<Fish> list2 = new JList<Fish>(redPool);
+		panel.add(list2);
+		
+		JList<String> list3 = new JList<String>(bluePool);
+		panel.add(list3);
+		
+		JList<String> list4 = new JList<String>(yellowPool);
+		panel.add(list4);
 
 		JPanel innerPanelTwo = new JPanel();
 		innerPanelTwo.add(new JButton("Create Link"));
@@ -164,6 +206,30 @@ public class UserInterface extends JFrame {
 		panel.add(innerPanelOne);
 		panel.add(innerPanelTwo);
 		panel.add(innerPanelThree);
+		
+		createLink.addActionListener(new ActionListener() {
+			public void actionPerfomed(ActionEvent event) {
+				String variable = list1.getSelectedValue();
+				Fish redFish = list2.getSelectedValue();
+				String blueFish = list3.getSelectedValue();
+				String yellowFish = list4.getSelectedValue();
+				
+				if (variable != null) {
+					if (redFish != null) {
+						Link link = new Link(null, redFish);
+						links.addElement(link);
+					}
+		}
+		
+		list1.clearSelection();
+		list2.clearSelection();
+		list3.clearSelection();
+		list4.clearSelection();
+		
+		}
+		});
+		
+		JList<Link> listOfLinks = new JList<Link>(links);
 
 		//  JPanel innerPanelOne = new JPanel();
 		return panel;
