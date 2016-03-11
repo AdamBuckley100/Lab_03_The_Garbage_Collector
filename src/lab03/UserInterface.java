@@ -296,6 +296,8 @@ public class UserInterface extends JFrame {
 		innerPanelOne.add(new JLabel("          "));
 		innerPanelOne.add(new JLabel("Object Pool"));
 		innerPanelOne.add(new JList());
+		//JList<Fish> handlePoolList = new JList<Fish>(handlePool); // change?
+		//innerPanelOne.add(handlePoolList);
 		innerPanelOne.add(new JLabel("          "));
 		innerPanelOne.add(new JList());
 
