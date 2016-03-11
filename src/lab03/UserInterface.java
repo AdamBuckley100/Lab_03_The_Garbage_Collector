@@ -210,12 +210,24 @@ public class UserInterface extends JFrame {
 				Fish blueFish = list3.getSelectedValue();
 				Fish yellowFish = list4.getSelectedValue();
 
-				if (var == "red var") {
+				if (var != null)
+				{
 					if (redFish != null) {
-						Link link = new Link(redFish, redFish);
+						Link link = new Link(null, redFish);
 						links.addElement(link);
 					}
 					else if (blueFish !=null) {
+						Link link = new Link(null, blueFish);
+						links.addElement(link);
+					}
+					else if (yellowFish !=null) {
+						Link link = new Link(null, yellowFish);
+						links.addElement(link);
+					}
+				}
+				else if (redFish != null)
+				{
+					if (blueFish !=null) {
 						Link link = new Link(redFish, blueFish);
 						links.addElement(link);
 					}
@@ -223,21 +235,25 @@ public class UserInterface extends JFrame {
 						Link link = new Link(redFish, yellowFish);
 						links.addElement(link);
 					}
-				}
-
-				if (var == "blue var") {
-					if (blueFish !=null) {
-						Link link = new Link(blueFish, blueFish);
+					else if (redFish != null) {
+						Link link = new Link(redFish, redFish);
 						links.addElement(link);
 					}
-					else if (yellowFish !=null) {
+				}
+				else if (blueFish != null)
+				{
+					if (yellowFish != null) {
 						Link link = new Link(blueFish, yellowFish);
 						links.addElement(link);
 					}
+					else if (blueFish !=null) {
+						Link link = new Link(blueFish, blueFish);
+						links.addElement(link);
+					}
 				}
-
-				if (var == "yellow var") {
-					if (yellowFish !=null) {
+				else if (yellowFish != null)
+				{
+					if (yellowFish != null) {
 						Link link = new Link(yellowFish, yellowFish);
 						links.addElement(link);
 					}
