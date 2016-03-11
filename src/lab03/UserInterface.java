@@ -292,14 +292,16 @@ public class UserInterface extends JFrame {
 		JPanel innerPanelOne = new JPanel();
 		innerPanelOne.setLayout(new GridLayout(2, 3));
 
+		
 		innerPanelOne.add(new JLabel("Handle Pool"));
 		innerPanelOne.add(new JLabel("          "));
 		innerPanelOne.add(new JLabel("Object Pool"));
-		innerPanelOne.add(new JList());
-		//JList<Fish> handlePoolList = new JList<Fish>(handlePool); // change?
-		//innerPanelOne.add(handlePoolList);
+		JList<Fish> handlePoolList = new JList<Fish>(handlePool); // change?
+		innerPanelOne.add(handlePoolList);
 		innerPanelOne.add(new JLabel("          "));
-		innerPanelOne.add(new JList());
+		JList<Fish> objectPoolList = new JList<Fish>(objectPool); // change?
+		innerPanelOne.add(objectPoolList);
+		objectPoolList.setCellRenderer(new FishRenderer());
 
 		JPanel innerPanelTwo = new JPanel();
 		innerPanelTwo.setLayout(new FlowLayout());
