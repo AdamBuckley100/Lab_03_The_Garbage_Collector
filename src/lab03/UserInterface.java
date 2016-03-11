@@ -6,20 +6,15 @@ import java.awt.event.*;
 
 public class UserInterface extends JFrame {
 
-	// in the handle pool every entry same size
-	//public DefaultListModel handlePool;
-	// Below: each and every memory block has a 4 byte header (an int if 4 bytes)
-	//public DefaultListModel objectPool;
-
 	public static DefaultListModel<Fish> handlePool = new DefaultListModel<Fish>();
 	public static DefaultListModel<Fish> objectPool = new DefaultListModel<Fish>();
 
-	public static DefaultListModel<Fish> redPool = new DefaultListModel<Fish>();
-	public static DefaultListModel bluePool = new DefaultListModel<Fish>();
-	public static DefaultListModel yellowPool = new DefaultListModel<Fish>();
+	public static DefaultListModel<Fish> theRedPool = new DefaultListModel<Fish>();
+	public static DefaultListModel theBluePool = new DefaultListModel<Fish>();
+	public static DefaultListModel theYellowPool = new DefaultListModel<Fish>();
 
-	//public static DefaultListModel links;
-	private static final DefaultListModel<Link> links = new DefaultListModel<Link>();
+	//public static DefaultListModel LinkList;
+	private static final DefaultListModel<Link> LinkList = new DefaultListModel<Link>();
 
 	/**
 	 * The Constructor.
@@ -30,9 +25,9 @@ public class UserInterface extends JFrame {
 		handlePool = new DefaultListModel();
 		objectPool = new DefaultListModel();
 
-		redPool = new DefaultListModel();
-		bluePool = new DefaultListModel();
-		yellowPool = new DefaultListModel();
+		theRedPool = new DefaultListModel();
+		theBluePool = new DefaultListModel();
+		theYellowPool = new DefaultListModel();
 	}
 
 	/**
@@ -40,7 +35,7 @@ public class UserInterface extends JFrame {
 	 * this method should be invoked from the
 	 * event-dispatching thread.
 	 */
-	private static void createAndShowGUI(MainClassWorkings main) {
+	private static void doGUI(MainClassWorkings main) {
 
 		//MainClassWorkings main = new MainClassWorkings();
 
@@ -52,25 +47,25 @@ public class UserInterface extends JFrame {
 		ImageIcon icon = null; //createImageIcon("images/middle.gif");
 
 		JComponent panel1 = makeTabOne(main);
-		tabbedPane.addTab("Tab 1", icon, panel1,
-				"Does nothing");
+		tabbedPane.addTab("First tab section", icon, panel1,
+				"");
 		tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
 		JComponent panel2 = makeTabTwo();
-		tabbedPane.addTab("Tab 2", icon, panel2,
-				"Does twice as much nothing");
+		tabbedPane.addTab("Second tab section", icon, panel2,
+				"");
 		tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
 		JComponent panel3 = makeTabThree();
-		tabbedPane.addTab("Tab 3", icon, panel3,
-				"Still does nothing");
+		tabbedPane.addTab("Third tab section", icon, panel3,
+				"");
 		tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
 
 		JComponent panel4 = makeTabFour();
 		//    "Panel #4 (has a preferred size of 410 x 50).");
 		//panel4.setPreferredSize(new Dimension(410, 50));
-		tabbedPane.addTab("Tab 4", icon, panel4,
-				"Does nothing at all");
+		tabbedPane.addTab("Fourth tab section", icon, panel4,
+				"");
 		tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
 
 		frame.getContentPane().add(tabbedPane);
@@ -93,13 +88,13 @@ public class UserInterface extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(3, 3));
 
-		JLabel label1 = new JLabel("Handle Pool");
-		panel.add(label1);
+		JLabel firstLabel = new JLabel("Handle Pool");
+		panel.add(firstLabel);
 
 		panel.add(new JLabel());
 
-		JLabel label2 = new JLabel("Object Pool");
-		panel.add(label2);
+		JLabel secondLabel = new JLabel("Object Pool");
+		panel.add(secondLabel);
 
 		JList<Fish> handlePoolList = new JList<Fish>(handlePool); // change?
 		panel.add(handlePoolList);
@@ -125,7 +120,7 @@ public class UserInterface extends JFrame {
 				RedFish f = new RedFish();
 				handlePool.addElement(f);
 				objectPool.addElement(f);
-				redPool.addElement(f);
+				theRedPool.addElement(f);
 			}
 		});
 
@@ -135,7 +130,7 @@ public class UserInterface extends JFrame {
 				BlueFish f = new BlueFish();
 				handlePool.addElement(f);
 				objectPool.addElement(f);
-				bluePool.addElement(f);
+				theBluePool.addElement(f);
 			}
 		});
 
@@ -145,7 +140,7 @@ public class UserInterface extends JFrame {
 				YellowFish f = new YellowFish();
 				handlePool.addElement(f);
 				objectPool.addElement(f);
-				yellowPool.addElement(f);
+				theYellowPool.addElement(f);
 			}
 		});
 
@@ -165,34 +160,34 @@ public class UserInterface extends JFrame {
 		gl.setHgap(3);
 		topPanel.setLayout(gl);
 
-		JLabel label1 = new JLabel("Local variables");
-		topPanel.add(label1);
+		JLabel firstLabel = new JLabel("Local variables");
+		topPanel.add(firstLabel);
 
-		JLabel label2 = new JLabel("Red Fish");
-		topPanel.add(label2);
+		JLabel secondLabel = new JLabel("Red Fish");
+		topPanel.add(secondLabel);
 
-		JLabel label3 = new JLabel("Blue Fish");
-		topPanel.add(label3);
+		JLabel thirdLabel = new JLabel("Blue Fish");
+		topPanel.add(thirdLabel);
 
-		JLabel label4 = new JLabel("yellow Fish");
-		topPanel.add(label4);
+		JLabel fourthLabel = new JLabel("yellow Fish");
+		topPanel.add(fourthLabel);
 
 		DefaultListModel<String> localVariables = new DefaultListModel<String>();
 
-		localVariables.addElement("red var");
-		localVariables.addElement("blue var");
-		localVariables.addElement("yellow var");
+		localVariables.addElement("The Red Variable");
+		localVariables.addElement("The Blue Variable");
+		localVariables.addElement("The Yellow Variable");
 
 		JList<String> list1 = new JList<String>(localVariables);
 		topPanel.add(list1);
 
-		JList<Fish> list2 = new JList<Fish>(redPool);
+		JList<Fish> list2 = new JList<Fish>(theRedPool);
 		topPanel.add(list2);
 
-		JList<Fish> list3 = new JList<Fish>(bluePool);
+		JList<Fish> list3 = new JList<Fish>(theBluePool);
 		topPanel.add(list3);
 
-		JList<Fish> list4 = new JList<Fish>(yellowPool);
+		JList<Fish> list4 = new JList<Fish>(theYellowPool);
 		topPanel.add(list4);
 
 		panel.add(topPanel);
@@ -200,7 +195,7 @@ public class UserInterface extends JFrame {
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setLayout(new GridLayout(2, 1));
 
-		JButton createLink = new JButton("Create Link");
+		JButton createLink = new JButton("Create A Link");
 		bottomPanel.add(createLink);
 
 		createLink.addActionListener(new ActionListener() {
@@ -214,48 +209,48 @@ public class UserInterface extends JFrame {
 				{
 					if (redFish != null) {
 						Link link = new Link(null, redFish);
-						links.addElement(link);
+						LinkList.addElement(link);
 					}
 					else if (blueFish !=null) {
 						Link link = new Link(null, blueFish);
-						links.addElement(link);
+						LinkList.addElement(link);
 					}
 					else if (yellowFish !=null) {
 						Link link = new Link(null, yellowFish);
-						links.addElement(link);
+						LinkList.addElement(link);
 					}
 				}
 				else if (redFish != null)
 				{
 					if (blueFish !=null) {
 						Link link = new Link(redFish, blueFish);
-						links.addElement(link);
+						LinkList.addElement(link);
 					}
 					else if (yellowFish !=null) {
 						Link link = new Link(redFish, yellowFish);
-						links.addElement(link);
+						LinkList.addElement(link);
 					}
 					else if (redFish != null) {
 						Link link = new Link(redFish, redFish);
-						links.addElement(link);
+						LinkList.addElement(link);
 					}
 				}
 				else if (blueFish != null)
 				{
 					if (yellowFish != null) {
 						Link link = new Link(blueFish, yellowFish);
-						links.addElement(link);
+						LinkList.addElement(link);
 					}
 					else if (blueFish !=null) {
 						Link link = new Link(blueFish, blueFish);
-						links.addElement(link);
+						LinkList.addElement(link);
 					}
 				}
 				else if (yellowFish != null)
 				{
 					if (yellowFish != null) {
 						Link link = new Link(yellowFish, yellowFish);
-						links.addElement(link);
+						LinkList.addElement(link);
 					}
 				}
 
@@ -267,8 +262,8 @@ public class UserInterface extends JFrame {
 			}
 		});
 
-		JList<Link> listOfLinks = new JList<Link>(links);
-		bottomPanel.add(listOfLinks);
+		JList<Link> listOfLinkList = new JList<Link>(LinkList);
+		bottomPanel.add(listOfLinkList);
 
 		panel.add(bottomPanel);
 
@@ -318,7 +313,7 @@ public class UserInterface extends JFrame {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				MainClassWorkings main = new MainClassWorkings();
-				createAndShowGUI(main);
+				doGUI(main);
 			}
 		});  
 	}  

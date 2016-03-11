@@ -13,9 +13,9 @@ public class MainClassWorkings {
 	// Below: each and every memory block has a 4 byte header (an int if 4 bytes)
 	public DefaultListModel objectPool;
 	
-	public DefaultListModel redPool;
-	public DefaultListModel bluePool;
-	public DefaultListModel yellowPool;
+	public DefaultListModel theRedPool;
+	public DefaultListModel theBluePool;
+	public DefaultListModel theYellowPool;
 
 	/**
 	 * Constructor. 
@@ -26,9 +26,9 @@ public class MainClassWorkings {
 		handlePool = new DefaultListModel();
 		objectPool = new DefaultListModel();
 		
-		redPool = new DefaultListModel();
-		bluePool = new DefaultListModel();
-		yellowPool = new DefaultListModel();
+		theRedPool = new DefaultListModel();
+		theBluePool = new DefaultListModel();
+		theYellowPool = new DefaultListModel();
 	}
 
 	public void addFish()

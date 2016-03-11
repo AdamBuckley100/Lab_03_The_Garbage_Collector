@@ -15,11 +15,11 @@ public class Link {
 	{
 		if (from == null)
 		{
-			return "variable -> " + to.toString();
+			return "Local Variable: " + to.toString();
 		}
 		else
 		{
-			return from.toString() + " ---> " + to.toString();
+			return from.toString() + " to " + to.toString();
 		}
 	}
 }
