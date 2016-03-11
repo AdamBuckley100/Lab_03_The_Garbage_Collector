@@ -5,31 +5,36 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class UserInterface extends JFrame {
-	
+
 	// in the handle pool every entry same size
-	public DefaultListModel handlePool;
+	//public DefaultListModel handlePool;
 	// Below: each and every memory block has a 4 byte header (an int if 4 bytes)
-	public DefaultListModel objectPool;
+	//public DefaultListModel objectPool;
 	
-	public static DefaultListModel redPool;
-	public static DefaultListModel bluePool;
-	public static DefaultListModel yellowPool;
-	
+	public static DefaultListModel<Fish> handlePool = new DefaultListModel<Fish>();
+	public static DefaultListModel<Fish> objectPool = new DefaultListModel<Fish>();
+
+	public static DefaultListModel<Fish> redPool = new DefaultListModel<Fish>();
+	public static DefaultListModel bluePool = new DefaultListModel<Fish>();
+	public static DefaultListModel yellowPool = new DefaultListModel<Fish>();
+
 	//public static DefaultListModel links;
 	private static final DefaultListModel<Link> links = new DefaultListModel<Link>();
 
-	
+	/**
+	 * The Constructor.
+	 */
 	public UserInterface()
 	{
 		// so the GUI can attach to list
 		handlePool = new DefaultListModel();
 		objectPool = new DefaultListModel();
-		
+
 		redPool = new DefaultListModel();
 		bluePool = new DefaultListModel();
 		yellowPool = new DefaultListModel();
 	}
-	
+
 	/**
 	 * Create the GUI and show it.  For thread safety,
 	 * this method should be invoked from the
@@ -42,7 +47,6 @@ public class UserInterface extends JFrame {
 		//Create and set up the window.
 		JFrame frame = new JFrame("HelloWorldSwing");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 
 		JTabbedPane tabbedPane = new JTabbedPane();
 		ImageIcon icon = null; //createImageIcon("images/middle.gif");
@@ -68,8 +72,7 @@ public class UserInterface extends JFrame {
 		tabbedPane.addTab("Tab 4", icon, panel4,
 				"Does nothing at all");
 		tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
-
-
+		
 		frame.getContentPane().add(tabbedPane);
 
 		//Display the window.
@@ -87,154 +90,155 @@ public class UserInterface extends JFrame {
 	}
 
 	public static JComponent makeTabOne(final MainClassWorkings main) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(3, 3));
+		
+		JLabel label1 = new JLabel("Handle Pool");
+		panel.add(label1);
+		
+		panel.add(new JLabel());
+		
+		JLabel label2 = new JLabel("Object Pool");
+		panel.add(label2);
+		
+		JList<Fish> handlePoolList = new JList<Fish>(handlePool); // change?
+		panel.add(handlePoolList);
+		
+		panel.add(new JLabel());
+		
+		JList<Fish> objectPoolList = new JList<Fish>(objectPool);
+		panel.add(objectPoolList);
+		objectPoolList.setCellRenderer(new FishRenderer());
+		
+		JButton button1 = new JButton("Red Fish");
+		panel.add(button1);
+		
+		JButton button2 = new JButton("Blue Fish");
+		panel.add(button2);
+		
+		JButton button3 = new JButton("Yellow Fish");
+		panel.add(button3);
+		
+		button1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event)
+			{
+				RedFish f = new RedFish();
+				handlePool.addElement(f);
+				objectPool.addElement(f);
+				redPool.addElement(f);
+			}
+		});
+		
+		button2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event)
+			{
+				BlueFish f = new BlueFish();
+				handlePool.addElement(f);
+				objectPool.addElement(f);
+				bluePool.addElement(f);
+			}
+		});
+		
+		button3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event)
+			{
+				YellowFish f = new YellowFish();
+				handlePool.addElement(f);
+				objectPool.addElement(f);
+				yellowPool.addElement(f);
+			}
+		});
+		
+		return panel;
+	}
+
+	public static JComponent makeTabTwo() {
+		
 		JPanel panel = new JPanel(false);
 
 		BoxLayout boxLayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
 		panel.setLayout(boxLayout);
 
-		JPanel innerPanelOne = new JPanel();
-		innerPanelOne.setLayout(new GridLayout(2, 3));
-
-		innerPanelOne.add(new JLabel("Handle Pool"));
-		innerPanelOne.add(new JLabel("          "));
-		innerPanelOne.add(new JLabel("Object Pool"));
-		JList<Fish> handleList = new JList<Fish>(main.handlePool);
-		innerPanelOne.add(handleList);
-
-		innerPanelOne.add(new JLabel("          "));
-
-		JList<Fish> objectList = new JList<Fish>(main.objectPool);
-		innerPanelOne.add(objectList);
-
-		objectList.setCellRenderer(new FishRenderer());
-
-		JPanel innerPanelTwo = new JPanel();
-		innerPanelTwo.setLayout(new FlowLayout());
-
-		JButton addRedFish = new JButton("Add Red Fish");
-		innerPanelTwo.add(addRedFish);
-		addRedFish.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-
-				main.handlePool.addElement(new RedFish());
-
-				// need size added too below. CUSTOM RENDERER NEEDED
-
-				main.objectPool.addElement(new RedFish());
-
-				//main.objectPool.setCellRenderer(new FishRenderer());
-			}
-		});
-
-		//innerPanelTwo.add(new JButton("Red Fish"));
-		//addRedFish
-
-		JButton addBlueFish = new JButton("Add Blue Fish");
-		innerPanelTwo.add(addBlueFish);
-		addBlueFish.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				main.handlePool.addElement(new BlueFish());
-				main.objectPool.addElement(new BlueFish());
-
-			}
-		});
-
-		JButton addYellowFish = new JButton("Add Yellow Fish");
-		innerPanelTwo.add(addYellowFish);
-		addYellowFish.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				main.handlePool.addElement(new YellowFish());
-				main.objectPool.addElement(new YellowFish());
-
-				//main.objectPool.setCellRenderer(new FishRenderer());
-			}
-		});
-
-		//innerPanelTwo.add(new JButton("Blue Fish"));
-		//innerPanelTwo.add(new JButton("Yellow Fish"));
-
-		panel.add(innerPanelOne);
-		panel.add(innerPanelTwo);
-		return panel;
-	}
-
-	public static JComponent makeTabTwo() {
-		JPanel panel = new JPanel();
-
-		BoxLayout boxLayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
-		panel.setLayout(boxLayout);
-
-		JPanel innerPanelOne = new JPanel();
-		//GridLayout gl = innerPanelOne.setLayout(new GridLayout(2,4));
+		JPanel topPanel = new JPanel();
+		
 		GridLayout gl = new GridLayout(2, 4);
 		gl.setHgap(3);
-		innerPanelOne.setLayout(gl);
+		topPanel.setLayout(gl);
 		
-		innerPanelOne.add(new JLabel("Local variables"));
-		innerPanelOne.add(new JLabel("red Fish instances"));
-		innerPanelOne.add(new JLabel("blue Fish instances"));
-		innerPanelOne.add(new JLabel("yellow Fish instances"));
-		//innerPanelOne.add(new JList());
-		//innerPanelOne.add(new JList());
-		//innerPanelOne.add(new JList());
-		//innerPanelOne.add(new JList());
+		JLabel label1 = new JLabel("Local variables");
+		topPanel.add(label1);
+		
+		JLabel label2 = new JLabel("Red Fish");
+		topPanel.add(label2);
+		
+		JLabel label3 = new JLabel("Blue Fish");
+		topPanel.add(label3);
+		
+		JLabel label4 = new JLabel("yellow Fish");
+		topPanel.add(label4);
 		
 		DefaultListModel<String> localVariables = new DefaultListModel<String>();
-		localVariables.addElement("Red variable:");
-		localVariables.addElement("Yellow variable:");
+		
+		localVariables.addElement("red var");
+		localVariables.addElement("blue var");
+		localVariables.addElement("yellow var");
 		
 		JList<String> list1 = new JList<String>(localVariables);
-		panel.add(list1);
+		topPanel.add(list1);
 		
 		JList<Fish> list2 = new JList<Fish>(redPool);
-		panel.add(list2);
+		topPanel.add(list2);
 		
-		JList<String> list3 = new JList<String>(bluePool);
-		panel.add(list3);
+		JList<Fish> list3 = new JList<Fish>(bluePool);
+		topPanel.add(list3);
 		
-		JList<String> list4 = new JList<String>(yellowPool);
-		panel.add(list4);
-
-		JPanel innerPanelTwo = new JPanel();
-		innerPanelTwo.add(new JButton("Create Link"));
-
-		JPanel innerPanelThree = new JPanel();
-		innerPanelThree.setLayout(new GridLayout(2, 1));
-		innerPanelThree.add(new JLabel("LINKS: (below)"));
-		innerPanelThree.add(new JList());
-
-		panel.add(innerPanelOne);
-		panel.add(innerPanelTwo);
-		panel.add(innerPanelThree);
+		JList<Fish> list4 = new JList<Fish>(yellowPool);
+		topPanel.add(list4);
+		
+		panel.add(topPanel);
+		
+		JPanel bottomPanel = new JPanel();
+		bottomPanel.setLayout(new GridLayout(2, 1));
+		
+		JButton createLink = new JButton("Create Link");
+		bottomPanel.add(createLink);
 		
 		createLink.addActionListener(new ActionListener() {
-			public void actionPerfomed(ActionEvent event) {
-				String variable = list1.getSelectedValue();
+			public void actionPerformed(ActionEvent event) {
+				String var = list1.getSelectedValue();
 				Fish redFish = list2.getSelectedValue();
-				String blueFish = list3.getSelectedValue();
-				String yellowFish = list4.getSelectedValue();
-				
-				if (variable != null) {
+				Fish blueFish = list3.getSelectedValue();
+				Fish yellowFish = list4.getSelectedValue();
+
+				if (var != null) {
 					if (redFish != null) {
 						Link link = new Link(null, redFish);
 						links.addElement(link);
 					}
-		}
-		
-		list1.clearSelection();
-		list2.clearSelection();
-		list3.clearSelection();
-		list4.clearSelection();
-		
-		}
+					else if (blueFish !=null) {
+						Link link = new Link(null, blueFish);
+						links.addElement(link);
+					}
+				}
+				
+				// Why I hav clear selection: takes away selection after a link has been selected/
+				list1.clearSelection();
+				list2.clearSelection();
+				list3.clearSelection();
+				list4.clearSelection();
+			}
 		});
-		
+
 		JList<Link> listOfLinks = new JList<Link>(links);
+		bottomPanel.add(listOfLinks);
+		
+		panel.add(bottomPanel);
 
 		//  JPanel innerPanelOne = new JPanel();
 		return panel;
 	}
 
+	//garbage collect...
 	public static JComponent makeTabThree() {
 		JPanel panel = new JPanel(false);
 		panel.add(new JButton("garbage collect"));
@@ -244,7 +248,6 @@ public class UserInterface extends JFrame {
 	public static JComponent makeTabFour() {
 		JPanel panel = new JPanel(false);
 
-
 		BoxLayout boxLayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
 		panel.setLayout(boxLayout);
 
@@ -257,7 +260,6 @@ public class UserInterface extends JFrame {
 		innerPanelOne.add(new JList());
 		innerPanelOne.add(new JLabel("          "));
 		innerPanelOne.add(new JList());
-
 
 		JPanel innerPanelTwo = new JPanel();
 		innerPanelTwo.setLayout(new FlowLayout());

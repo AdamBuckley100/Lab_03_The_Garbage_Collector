@@ -12,6 +12,10 @@ public class Fish {
 		return -1;
 	}
 	
+	/**
+	 * Appropraite class specifications apply to this method.
+	 * @return
+	 */
 	public String toStringWithSize()
 	{
 		return toString() + " (" + toSize() + ")";
