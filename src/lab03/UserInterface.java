@@ -10,7 +10,7 @@ public class UserInterface extends JFrame {
 	//public DefaultListModel handlePool;
 	// Below: each and every memory block has a 4 byte header (an int if 4 bytes)
 	//public DefaultListModel objectPool;
-	
+
 	public static DefaultListModel<Fish> handlePool = new DefaultListModel<Fish>();
 	public static DefaultListModel<Fish> objectPool = new DefaultListModel<Fish>();
 
@@ -72,7 +72,7 @@ public class UserInterface extends JFrame {
 		tabbedPane.addTab("Tab 4", icon, panel4,
 				"Does nothing at all");
 		tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
-		
+
 		frame.getContentPane().add(tabbedPane);
 
 		//Display the window.
@@ -92,33 +92,33 @@ public class UserInterface extends JFrame {
 	public static JComponent makeTabOne(final MainClassWorkings main) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(3, 3));
-		
+
 		JLabel label1 = new JLabel("Handle Pool");
 		panel.add(label1);
-		
+
 		panel.add(new JLabel());
-		
+
 		JLabel label2 = new JLabel("Object Pool");
 		panel.add(label2);
-		
+
 		JList<Fish> handlePoolList = new JList<Fish>(handlePool); // change?
 		panel.add(handlePoolList);
-		
+
 		panel.add(new JLabel());
-		
+
 		JList<Fish> objectPoolList = new JList<Fish>(objectPool);
 		panel.add(objectPoolList);
 		objectPoolList.setCellRenderer(new FishRenderer());
-		
+
 		JButton button1 = new JButton("Red Fish");
 		panel.add(button1);
-		
+
 		JButton button2 = new JButton("Blue Fish");
 		panel.add(button2);
-		
+
 		JButton button3 = new JButton("Yellow Fish");
 		panel.add(button3);
-		
+
 		button1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event)
 			{
@@ -128,7 +128,7 @@ public class UserInterface extends JFrame {
 				redPool.addElement(f);
 			}
 		});
-		
+
 		button2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event)
 			{
@@ -138,7 +138,7 @@ public class UserInterface extends JFrame {
 				bluePool.addElement(f);
 			}
 		});
-		
+
 		button3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event)
 			{
@@ -148,61 +148,61 @@ public class UserInterface extends JFrame {
 				yellowPool.addElement(f);
 			}
 		});
-		
+
 		return panel;
 	}
 
 	public static JComponent makeTabTwo() {
-		
+
 		JPanel panel = new JPanel(false);
 
 		BoxLayout boxLayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
 		panel.setLayout(boxLayout);
 
 		JPanel topPanel = new JPanel();
-		
+
 		GridLayout gl = new GridLayout(2, 4);
 		gl.setHgap(3);
 		topPanel.setLayout(gl);
-		
+
 		JLabel label1 = new JLabel("Local variables");
 		topPanel.add(label1);
-		
+
 		JLabel label2 = new JLabel("Red Fish");
 		topPanel.add(label2);
-		
+
 		JLabel label3 = new JLabel("Blue Fish");
 		topPanel.add(label3);
-		
+
 		JLabel label4 = new JLabel("yellow Fish");
 		topPanel.add(label4);
-		
+
 		DefaultListModel<String> localVariables = new DefaultListModel<String>();
-		
+
 		localVariables.addElement("red var");
 		localVariables.addElement("blue var");
 		localVariables.addElement("yellow var");
-		
+
 		JList<String> list1 = new JList<String>(localVariables);
 		topPanel.add(list1);
-		
+
 		JList<Fish> list2 = new JList<Fish>(redPool);
 		topPanel.add(list2);
-		
+
 		JList<Fish> list3 = new JList<Fish>(bluePool);
 		topPanel.add(list3);
-		
+
 		JList<Fish> list4 = new JList<Fish>(yellowPool);
 		topPanel.add(list4);
-		
+
 		panel.add(topPanel);
-		
+
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setLayout(new GridLayout(2, 1));
-		
+
 		JButton createLink = new JButton("Create Link");
 		bottomPanel.add(createLink);
-		
+
 		createLink.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				String var = list1.getSelectedValue();
@@ -210,17 +210,39 @@ public class UserInterface extends JFrame {
 				Fish blueFish = list3.getSelectedValue();
 				Fish yellowFish = list4.getSelectedValue();
 
-				if (var != null) {
+				if (var == "red var") {
 					if (redFish != null) {
-						Link link = new Link(null, redFish);
+						Link link = new Link(redFish, redFish);
 						links.addElement(link);
 					}
 					else if (blueFish !=null) {
-						Link link = new Link(null, blueFish);
+						Link link = new Link(redFish, blueFish);
+						links.addElement(link);
+					}
+					else if (yellowFish !=null) {
+						Link link = new Link(redFish, yellowFish);
 						links.addElement(link);
 					}
 				}
-				
+
+				if (var == "blue var") {
+					if (blueFish !=null) {
+						Link link = new Link(blueFish, blueFish);
+						links.addElement(link);
+					}
+					else if (yellowFish !=null) {
+						Link link = new Link(blueFish, yellowFish);
+						links.addElement(link);
+					}
+				}
+
+				if (var == "yellow var") {
+					if (yellowFish !=null) {
+						Link link = new Link(yellowFish, yellowFish);
+						links.addElement(link);
+					}
+				}
+
 				// Why I hav clear selection: takes away selection after a link has been selected/
 				list1.clearSelection();
 				list2.clearSelection();
@@ -231,7 +253,7 @@ public class UserInterface extends JFrame {
 
 		JList<Link> listOfLinks = new JList<Link>(links);
 		bottomPanel.add(listOfLinks);
-		
+
 		panel.add(bottomPanel);
 
 		//  JPanel innerPanelOne = new JPanel();
