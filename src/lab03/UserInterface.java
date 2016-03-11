@@ -7,7 +7,7 @@ import java.awt.event.*;
 /**
  * Main Class and user interface combined.
  * @author Adam Buckley.
- * @Date 11/03/2016
+ * @Date 11/03/2016.
  *
  */
 
